@@ -1,0 +1,529 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nail Disease Detection | AI Healthcare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #14b8a6;
+      --secondary: #0f766e;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --glass: rgba(255,255,255,0.75);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0fdfa, #f8fafc);
+      color: var(--dark);
+    }
+
+   
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 60px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      animation: slideDown 0.8s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    header .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+   
+    section {
+      padding: 90px 10%;
+      animation: fadeUp 1s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heading {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+
+    .heading span {
+      color: var(--primary);
+    }
+
+    
+    .home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .home h1 {
+      font-size: 46px;
+      line-height: 1.2;
+    }
+
+    .home p {
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #334155;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: 0.3s;
+      box-shadow: 0 10px 25px rgba(20,184,166,0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(20,184,166,0.5);
+    }
+
+   
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-width: 520px;
+      margin: auto;
+      text-align: center;
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px dashed var(--primary);
+      margin: 20px 0;
+      background: white;
+    }
+
+
+    .result {
+      margin-top: 25px;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .result h3 {
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+
+    .result img {
+      max-width: 100%;
+      margin-top: 15px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+
+    footer {
+      background: #020617;
+      color: #cbd5f5;
+      text-align: center;
+      padding: 30px;
+      margin-top: 60px;
+    }
+
+  
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 25px;
+      }
+
+      .home {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .home h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="#" class="logo"><i class="fa-solid fa-hand"></i> NailCare AI</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#nail-home">Nail Disease</a>
+    <a href="#predict">Prediction</a>
+  </nav>
+</header>
+
+<section class="home" id="home">
+  <div>
+    <h1>AI-Powered Nail Disease Detection</h1>
+    <p>
+      Detect nail diseases early using Deep Learning.  
+      Upload a nail image and let our AI analyze health indicators instantly.
+    </p>
+    <a href="#predict" class="btn">Try Prediction</a>
+  </div>
+  <div>
+    <img src="{{ url_for('static', filename='nail_home.svg') }}" width="100%">
+  </div>
+</section>
+
+<section id="nail-home">
+  <h2 class="heading">Nail Disease <span>Detection</span></h2>
+  <div class="card">
+    <p>
+      Nail abnormalities may indicate infections, nutritional deficiencies,
+      or systemic diseases. Our AI model is trained on multiple nail disease
+      categories using Deep Learning.
+    </p>
+  </div>
+</section>
+
+<section id="predict">
+  <h2 class="heading">Disease <span>Prediction</span></h2>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      <h3>Upload Nail Image</h3>
+      <input type="file" name="image" accept="image/*" required>
+      <button type="submit" class="btn">Predict</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+      <h3>🩺 {{ prediction }}</h3>
+      <p>📊 Confidence: <strong>{{ confidence }}%</strong></p>
+      <img src="{{ image_path }}">
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Nail Disease Detection | AI Healthcare Project</p>
+</footer>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nail Disease Detection | AI Healthcare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #14b8a6;
+      --secondary: #0f766e;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --glass: rgba(255,255,255,0.75);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0fdfa, #f8fafc);
+      color: var(--dark);
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      padding: 15px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    header .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    /* ================= SECTIONS ================= */
+    section {
+      padding: 90px 10%;
+    }
+
+    .heading {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+
+    .heading span {
+      color: var(--primary);
+    }
+
+    /* ================= HOME ================= */
+    .home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .home h1 {
+      font-size: 46px;
+    }
+
+    .home p {
+      margin: 20px 0;
+      color: #334155;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* ================= CARD ================= */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-width: 520px;
+      margin: auto;
+      text-align: center;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px dashed var(--primary);
+      margin: 20px 0;
+    }
+
+    /* ================= RESULT ================= */
+    .result {
+      margin-top: 30px;
+      text-align: left;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress div {
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .top-list {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .top-list li {
+      margin-bottom: 6px;
+    }
+
+    footer {
+      background: #020617;
+      color: #cbd5f5;
+      text-align: center;
+      padding: 30px;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .home {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="#" class="logo"><i class="fa-solid fa-hand"></i> NailCare AI</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#predict">Prediction</a>
+  </nav>
+</header>
+
+<section class="home" id="home">
+  <div>
+    <h1>AI-Powered Nail Disease Detection</h1>
+    <p>
+      Upload a nail image and let AI analyze potential nail diseases instantly.
+    </p>
+    <a href="#predict" class="btn">Try Prediction</a>
+  </div>
+  <img src="{{ url_for('static', filename='nail_home.svg') }}" width="100%">
+</section>
+
+<section id="predict">
+  <h2 class="heading">Disease <span>Prediction</span></h2>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      <h3>Upload Nail Image</h3>
+      <input type="file" name="image" accept="image/*" required>
+      <button type="submit" class="btn">Predict</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+      <h3>🩺 Detected Disease: <strong>{{ prediction }}</strong></h3>
+
+      <p>📊 Confidence: <strong>{{ confidence }}%</strong></p>
+
+      <div class="progress">
+        <div style="width: {{ confidence }}%;"></div>
+      </div>
+
+      {% if confidence < 60 %}
+        <p style="color:red;">⚠️ {{ status }}</p>
+      {% else %}
+        <p style="color:green;">✅ {{ status }}</p>
+      {% endif %}
+
+      <img src="{{ image_path }}" style="max-width:200px;margin-top:15px;border-radius:12px;">
+
+      {% if top_results %}
+      <div class="top-list">
+        <h4>Top Possible Diseases:</h4>
+        <ul>
+          {% for disease, prob in top_results %}
+            <li>{{ disease }} – {{ prob }}%</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Nail Disease Detection | AI Healthcare Project</p>
+</footer>
+
+</body>
+</html>
+
